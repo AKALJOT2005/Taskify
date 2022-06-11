@@ -1,0 +1,36 @@
+.TodoList{
+    display: flex;
+    max-width: 1000px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.single_todo{
+    background-color: #ffff00;
+    margin:20px 10px;
+    display:flex;
+    min-width: 200px;
+    max-width: 400px;
+    position: relative;
+    min-height: 40px;
+    max-height: fit-content;
+    align-items: center;
+}
+
+
+.todo_text{
+    font-size: 20px;
+    flex: 1;
+    display: flex;
+    max-lines: 10px;   
+    padding:2px 6px;
+}
+.Todo-EditList{
+    margin:4px 4px;
+    height: 20px;
+    border-radius: 5px;
+    outline: none;
+    border-style: none;
+    border: 2px solid rgb(72, 189, 17);
+}
