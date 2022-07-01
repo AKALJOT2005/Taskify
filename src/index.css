@@ -5,9 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgba(4, 107, 102, 0.627);
+  background-color: rgba(34, 8, 126, 0.817);
   overflow-x:hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 code {

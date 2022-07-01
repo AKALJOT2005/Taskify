@@ -1,10 +1,18 @@
-    import React from 'react';
+    import React, { FormEvent } from 'react';
     import {Todos} from '../App';
     import DoneIcon from '@mui/icons-material/Done';
     import EditIcon from '@mui/icons-material/Edit';
     import DeleteIcon from '@mui/icons-material/Delete';
     import './Todo.css'
+    import {  selectCurrent } from '../redux/features/checklistSlice';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import {AddCheckvalue} from '../redux/features/checklistSlice';
+import {useDispatch} from 'react-redux'
+import ToDo from './toDo';
+import { List } from '@mui/material';
+import { Type } from 'typescript';
+
     
 interface IProps{
     todo:Todos;
@@ -15,24 +23,41 @@ interface IProps{
 
 
 const SingleTodo :React.FC<IProps>= ({todo,todos,setTodo}) => {
+
+    const valueme=todo.Todos;
+    const Data:any=[]
+    const CurrentCheck=useSelector(selectCurrent)
+    const Dispatch=useDispatch();
+    
     const[edit,setEdit]=useState(false)
     const[editTodo,setEditTodo]=useState<string>(todo.Todos) 
 
-    const handleDone=(id:number)=> {
+    
+    const handleDone=(id:number,e:any)=> {
         setTodo(todos.map((todo)=>
-        todo.id === id ? {...todo , isDone:  !todo.isDone }:todo))
+        todo.id === id ? {...todo , isDone:  !todo.isDone }:todo));
+        (Dispatch(AddCheckvalue(todo.Todos)));   
+
     }
+
+    
+
     
     const handleDelete=(id:number)=>{
         setTodo(todos.filter((todo)=>todo.id!==id))
+       
+        
     }
 
     const handleEdit=(e:React.FormEvent,id:number)=>{
         e.preventDefault();
         setTodo(todos.map((todo)=>todo.id===id?{...todo ,Todos:editTodo}:todo))
         setEdit(false)
+        
     }
-
+   if (todo.isDone) {
+    return null
+   }
   return (
 <form className='single_todo' onSubmit={(e)=>handleEdit(e,todo.id)}>
 
@@ -42,18 +67,16 @@ const SingleTodo :React.FC<IProps>= ({todo,todos,setTodo}) => {
         onChange={(e)=>setEditTodo(e.target.value)} 
         className="Todo-EditList"/>
     ):(
-        todo.isDone?(
-            <s className='todo_text'>{todo.Todos}</s>
-            )
-            :(
+        
             <span className='todo_text'>{todo.Todos}</span>
-            )
+        
     )}
+    
 
    
 
     <div>   
-        <span onClick={()=>handleDone(todo.id)} className='single-icons'>
+        <span onClick={(e)=>handleDone(todo.id,e)} className='single-icons'>
         <DoneIcon/>
         </span>
         <span onClick={()=> {if(!edit && !todo.isDone){
@@ -65,13 +88,9 @@ const SingleTodo :React.FC<IProps>= ({todo,todos,setTodo}) => {
         <span onClick={()=> handleDelete(todo.id)} className='single-icons'>
         <DeleteIcon/>
         </span>
-    </div>
+       </div>  
 </form>
+)}
 
-
-
-
-  )
-}
 
 export default SingleTodo
